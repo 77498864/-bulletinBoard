@@ -75,7 +75,9 @@ public class BulletinController {
      * @param bulletinForm 表單資料。
      * @param bindingResult 驗證結果。
      * @param model 畫面模型。
-     * @return 成功導回列表頁，失敗返回表單頁。
+     * @return 成功導回列表頁，失敗返回表單頁
+     *
+     * @Valid會觸發BulletinForm內部寫的@NotBlank與@NotNull驗證
      */
     @PostMapping
     public String create(@Valid @ModelAttribute("bulletinForm") BulletinForm bulletinForm,
@@ -124,6 +126,8 @@ public class BulletinController {
      * @param bindingResult 驗證結果。
      * @param model 畫面模型。
      * @return 成功導回列表頁，失敗返回表單頁。
+     *
+     * @Valid會觸發BulletinForm內部寫的@NotBlank與@NotNull驗證
      */
     @PostMapping("/{id}")
     public String update(@PathVariable Long id,
