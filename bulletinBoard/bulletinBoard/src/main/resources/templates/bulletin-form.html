@@ -23,6 +23,7 @@
                     <!--Thymeleaf 會變成<input name="title" value="...">-->
                     <!--th:field="*{title}" = bulletinForm.title-->
                     <input type="text" id="title" th:field="*{title}" class="form-control">
+                    <!--@Valid會觸發BulletinForm內部寫的@NotBlank與@NotNull驗證 若驗證失敗 fields.hasErrors就會觸發-->
                     <div class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
                 </div>
 
