@@ -11,10 +11,7 @@ import java.util.List;
 
 /**
  * 布告欄服務類別。
- * <p>
- * 作用：
- * 1. 處理公告的商業邏輯。
- * 2. 呼叫 Repository 進行資料存取。
+ * 處理公告的操作邏輯
  */
 @Service
 public class BulletinService {
@@ -29,13 +26,19 @@ public class BulletinService {
     private final BulletinRepository bulletinRepository;
 
     /**
+     * 共用Service
+     * */
+    private ShareService shareService;
+
+    /**
      * 建構式。
      *
      * @param bulletinRepository 布告欄資料存取物件。
      * @return 無回傳值。
      */
-    public BulletinService(BulletinRepository bulletinRepository) {
+    public BulletinService(BulletinRepository bulletinRepository,  ShareService shareService) {
         this.bulletinRepository = bulletinRepository;
+        this.shareService = shareService;
     }
 
     /**
@@ -84,14 +87,15 @@ public class BulletinService {
      */
     @Transactional
     public void create(BulletinForm form) {
-        validateDateRange(form);
+        BulletinForm encodeForm = shareService.encodeForm(form);
+        validateDateRange(encodeForm);
 
         Bulletin bulletin = new Bulletin();
-        bulletin.setTitle(form.getTitle());
-        bulletin.setPublisher(form.getPublisher());
-        bulletin.setPublishDate(form.getPublishDate());
-        bulletin.setExpireDate(form.getExpireDate());
-        bulletin.setContent(form.getContent());
+        bulletin.setTitle(encodeForm.getTitle());
+        bulletin.setPublisher(encodeForm.getPublisher());
+        bulletin.setPublishDate(encodeForm.getPublishDate());
+        bulletin.setExpireDate(encodeForm.getExpireDate());
+        bulletin.setContent(encodeForm.getContent());
 
         bulletinRepository.save(bulletin);
     }
@@ -105,14 +109,15 @@ public class BulletinService {
      */
     @Transactional
     public void update(Long id, BulletinForm form) {
-        validateDateRange(form);
+        BulletinForm encodeForm = shareService.encodeForm(form);
+        validateDateRange(encodeForm);
 
         Bulletin bulletin = getById(id);
-        bulletin.setTitle(form.getTitle());
-        bulletin.setPublisher(form.getPublisher());
-        bulletin.setPublishDate(form.getPublishDate());
-        bulletin.setExpireDate(form.getExpireDate());
-        bulletin.setContent(form.getContent());
+        bulletin.setTitle(encodeForm.getTitle());
+        bulletin.setPublisher(encodeForm.getPublisher());
+        bulletin.setPublishDate(encodeForm.getPublishDate());
+        bulletin.setExpireDate(encodeForm.getExpireDate());
+        bulletin.setContent(encodeForm.getContent());
 
         bulletinRepository.update(bulletin);
     }

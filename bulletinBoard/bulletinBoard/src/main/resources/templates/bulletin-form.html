@@ -16,9 +16,12 @@
 
     <div class="card shadow-sm">
         <div class="card-body">
+            <!--相當於action="/bulletins POST" 整個 form 綁定到 bulletinForm 這個物件-->
             <form th:action="@{${formAction}}" th:object="${bulletinForm}" method="post">
                 <div class="mb-3">
                     <label for="title" class="form-label">標題</label>
+                    <!--Thymeleaf 會變成<input name="title" value="...">-->
+                    <!--th:field="*{title}" = bulletinForm.title-->
                     <input type="text" id="title" th:field="*{title}" class="form-control">
                     <div class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
                 </div>

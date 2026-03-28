@@ -11,6 +11,8 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>布告欄列表</h2>
+        <!--Thymeleaf會轉成<a href="/bulletins/new" class="btn btn-primary">新增公布訊息</a>-->
+        <!--相當於GET /bulletins/new-->
         <a th:href="@{/bulletins/new}" class="btn btn-primary">新增公布訊息</a>
     </div>
 
@@ -26,6 +28,8 @@
                 </tr>
                 </thead>
                 <tbody>
+                <!--#lists 是 Thymeleaf 內建的 Utility Object（工具物件） 裡面有isEmpty功能-->
+                <!--bulletinList 是從 model.addAttribute 帶回來的-->
                 <tr th:if="${#lists.isEmpty(bulletinList)}">
                     <td colspan="4" class="text-center">目前沒有資料</td>
                 </tr>
